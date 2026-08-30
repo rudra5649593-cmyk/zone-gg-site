@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Players · ZONE.GG</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --bg: #0A0D10;
+    --bg-panel: #10151A;
+    --bg-panel-raised: #151B21;
+    --line: #232B32;
+    --zone-blue: #2FA7C9;
+    --zone-blue-dim: #1A5A6E;
+    --danger: #FF4E3A;
+    --live: #3DDC84;
+    --amber: #FFB020;
+    --text: #E7ECEF;
+    --text-dim: #8A97A0;
+    --text-faint: #52606A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .display{font-family:'Rajdhani',sans-serif; font-weight:700;}
+
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 40px; border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:50; background:rgba(10,13,16,0.92); backdrop-filter:blur(8px);
+  }
+  .logo{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:24px; display:flex; align-items:center; gap:8px;}
+  .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--live); box-shadow:0 0 8px var(--live);}
+  .navlinks{display:flex; gap:32px; font-size:14px; font-weight:500; color:var(--text-dim);}
+  .navlinks a{color:inherit; text-decoration:none;}
+  .navlinks a.active{color:var(--zone-blue);}
+
+  .breadcrumb{padding:16px 40px 0; font-size:12px; color:var(--text-faint); max-width:1400px; margin:0 auto;}
+  .breadcrumb a{color:var(--text-faint); text-decoration:none;}
+  .breadcrumb .sep{margin:0 6px;}
+  .breadcrumb .current{color:var(--text-dim);}
+
+  main{padding:28px 40px 48px; max-width:1400px; margin:0 auto;}
+  .page-head{margin-bottom:24px; display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:14px;}
+  .page-title{font-size:30px;}
+  .page-sub{font-size:13px; color:var(--text-dim); margin-top:6px;}
+
+  .filter-row{display:flex; gap:8px;}
+  .filter-pill{
+    font-size:12px; color:var(--text-dim); border:1px solid var(--line); border-radius:20px;
+    padding:7px 16px; cursor:pointer;
+  }
+  .filter-pill.active{color:var(--zone-blue); border-color:var(--zone-blue-dim); background:rgba(47,167,201,0.08);}
+
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px;}
+
+  .p-card{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:4px;
+    padding:20px; cursor:pointer; transition:border-color .15s;
+  }
+  .p-card:hover{border-color:var(--zone-blue-dim);}
+  .p-card-top{display:flex; align-items:center; gap:12px; margin-bottom:16px;}
+  .p-avatar{
+    width:52px; height:52px; border-radius:8px; flex-shrink:0;
+    background:linear-gradient(160deg, var(--zone-blue-dim), var(--bg-panel-raised));
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Rajdhani',sans-serif; font-weight:700; font-size:18px; color:var(--zone-blue);
+  }
+  .p-ign{font-size:15px; font-weight:600;}
+  .p-team{font-size:12px; color:var(--text-faint); margin-top:2px;}
+  .p-role{
+    display:inline-block; font-size:10px; font-weight:700; letter-spacing:0.05em;
+    padding:3px 8px; border-radius:3px; background:rgba(47,167,201,0.12); color:var(--zone-blue);
+    margin-top:6px;
+  }
+  .p-stats{display:flex; justify-content:space-between; padding-top:14px; border-top:1px solid var(--line);}
+  .p-stat{text-align:center;}
+  .p-stat .label{font-size:10px; color:var(--text-faint); text-transform:uppercase; letter-spacing:0.04em;}
+  .p-stat .value{font-family:'JetBrains Mono',monospace; font-size:16px; margin-top:4px;}
+  .p-stat .value.live{color:var(--live);}
+  .p-stat .value.amber{color:var(--amber);}
+
+  @media (max-width: 1100px){ .grid{grid-template-columns:repeat(2,1fr);} }
+  @media (max-width: 900px){
+    nav{padding:14px 20px;} .navlinks{display:none;}
+    .breadcrumb{padding:14px 20px 0;}
+    main{padding:20px;}
+    .grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span class="dot"></span>ZONE<span style="color:var(--zone-blue)">.GG</span></div>
+  <div class="navlinks">
+    <a href="index.html">Live</a>
+    <a href="tournament.html">Tournaments</a>
+    <a href="standings.html">Standings</a>
+    <a href="players.html" class="active">Players</a>
+    <a href="news-article.html">News</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a><span class="sep">/</span><span class="current">Players</span>
+</div>
+
+<main>
+  <div class="page-head">
+    <div>
+      <div class="page-title display">Players</div>
+      <div class="page-sub">Top performers across BMPS Season 4</div>
+    </div>
+    <div class="filter-row">
+      <div class="filter-pill active">All Roles</div>
+      <div class="filter-pill">IGL</div>
+      <div class="filter-pill">Sniper</div>
+      <div class="filter-pill">Assaulter</div>
+      <div class="filter-pill">Support</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="p-card" onclick="location.href='player-profile.html'">
+      <div class="p-card-top">
+        <div class="p-avatar">GA</div>
+        <div>
+          <div class="p-ign">GhostAim</div>
+          <div class="p-team">Team Soul</div>
+          <div class="p-role">SNIPER / IGL</div>
+        </div>
+      </div>
+      <div class="p-stats">
+        <div class="p-stat"><div class="label">K/D</div><div class="value live">4.8</div></div>
+        <div class="p-stat"><div class="label">Kills</div><div class="value">62</div></div>
+        <div class="p-stat"><div class="label">Rating</div><div class="value amber">9.1</div></div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-avatar">MV</div>
+        <div>
+          <div class="p-ign">Mavi</div>
+          <div class="p-team">Team Soul</div>
+          <div class="p-role">ASSAULTER</div>
+        </div>
+      </div>
+      <div class="p-stats">
+        <div class="p-stat"><div class="label">K/D</div><div class="value live">3.9</div></div>
+        <div class="p-stat"><div class="label">Kills</div><div class="value">51</div></div>
+        <div class="p-stat"><div class="label">Rating</div><div class="value amber">8.4</div></div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-avatar">JK</div>
+        <div>
+          <div class="p-ign">Jokerr</div>
+          <div class="p-team">GodLike Esports</div>
+          <div class="p-role">FRAGGER</div>
+        </div>
+      </div>
+      <div class="p-stats">
+        <div class="p-stat"><div class="label">K/D</div><div class="value live">4.2</div></div>
+        <div class="p-stat"><div class="label">Kills</div><div class="value">55</div></div>
+        <div class="p-stat"><div class="label">Rating</div><div class="value amber">8.7</div></div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-avatar">OW</div>
+        <div>
+          <div class="p-ign">Owais</div>
+          <div class="p-team">GodLike Esports</div>
+          <div class="p-role">SUPPORT</div>
+        </div>
+      </div>
+      <div class="p-stats">
+        <div class="p-stat"><div class="label">K/D</div><div class="value live">3.1</div></div>
+        <div class="p-stat"><div class="label">Kills</div><div class="value">38</div></div>
+        <div class="p-stat"><div class="label">Rating</div><div class="value amber">7.6</div></div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-avatar">SC</div>
+        <div>
+          <div class="p-ign">ScoutOP</div>
+          <div class="p-team">Team Soul</div>
+          <div class="p-role">SUPPORT</div>
+        </div>
+      </div>
+      <div class="p-stats">
+        <div class="p-stat"><div class="label">K/D</div><div class="value live">2.8</div></div>
+        <div class="p-stat"><div class="label">Kills</div><div class="value">34</div></div>
+        <div class="p-stat"><div class="label">Rating</div><div class="value amber">7.2</div></div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-avatar">WR</div>
+        <div>
+          <div class="p-ign">Wraith</div>
+          <div class="p-team">Revenant Esports</div>
+          <div class="p-role">FRAGGER</div>
+        </div>
+      </div>
+      <div class="p-stats">
+        <div class="p-stat"><div class="label">K/D</div><div class="value live">2.4</div></div>
+        <div class="p-stat"><div class="label">Kills</div><div class="value">29</div></div>
+        <div class="p-stat"><div class="label">Rating</div><div class="value amber">6.5</div></div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-avatar">XS</div>
+        <div>
+          <div class="p-ign">Xylo</div>
+          <div class="p-team">Team XSpark</div>
+          <div class="p-role">IGL</div>
+        </div>
+      </div>
+      <div class="p-stats">
+        <div class="p-stat"><div class="label">K/D</div><div class="value live">2.9</div></div>
+        <div class="p-stat"><div class="label">Kills</div><div class="value">31</div></div>
+        <div class="p-stat"><div class="label">Rating</div><div class="value amber">7.0</div></div>
+      </div>
+    </div>
+
+    <div class="p-card">
+      <div class="p-card-top">
+        <div class="p-avatar">NV</div>
+        <div>
+          <div class="p-ign">Nova</div>
+          <div class="p-team">Global Esports</div>
+          <div class="p-role">SNIPER</div>
+        </div>
+      </div>
+      <div class="p-stats">
+        <div class="p-stat"><div class="label">K/D</div><div class="value live">3.4</div></div>
+        <div class="p-stat"><div class="label">Kills</div><div class="value">42</div></div>
+        <div class="p-stat"><div class="label">Rating</div><div class="value amber">7.9</div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
