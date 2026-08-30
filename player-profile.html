@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ronak "GhostAim" Sharma · ZONE.GG</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --bg: #0A0D10;
+    --bg-panel: #10151A;
+    --bg-panel-raised: #151B21;
+    --line: #232B32;
+    --zone-blue: #2FA7C9;
+    --zone-blue-dim: #1A5A6E;
+    --danger: #FF4E3A;
+    --live: #3DDC84;
+    --amber: #FFB020;
+    --text: #E7ECEF;
+    --text-dim: #8A97A0;
+    --text-faint: #52606A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .display{font-family:'Rajdhani',sans-serif; font-weight:700;}
+
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 40px; border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:50; background:rgba(10,13,16,0.92); backdrop-filter:blur(8px);
+  }
+  .logo{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:24px; display:flex; align-items:center; gap:8px;}
+  .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--live); box-shadow:0 0 8px var(--live);}
+  .navlinks{display:flex; gap:32px; font-size:14px; font-weight:500; color:var(--text-dim);}
+  .navlinks a{color:inherit; text-decoration:none;}
+  .navlinks a.active{color:var(--zone-blue);}
+
+  .breadcrumb{padding:16px 40px 0; font-size:12px; color:var(--text-faint);}
+  .breadcrumb a{color:var(--text-faint); text-decoration:none;}
+  .breadcrumb .sep{margin:0 6px;}
+  .breadcrumb .current{color:var(--text-dim);}
+
+  /* ===== Player header ===== */
+  .p-header{
+    padding:32px 40px; border-bottom:1px solid var(--line);
+    display:flex; gap:28px; align-items:center; flex-wrap:wrap;
+  }
+  .p-avatar{
+    width:96px; height:96px; border-radius:8px; flex-shrink:0;
+    background:linear-gradient(160deg, var(--zone-blue-dim), var(--bg-panel-raised));
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Rajdhani',sans-serif; font-weight:700; font-size:34px; color:var(--zone-blue);
+  }
+  .p-name-block{flex:1; min-width:220px;}
+  .p-ign{font-size:12px; color:var(--zone-blue); letter-spacing:0.08em; font-weight:600; margin-bottom:4px;}
+  .p-name{font-size:30px;}
+  .p-meta{font-size:13px; color:var(--text-dim); margin-top:6px; display:flex; gap:14px; flex-wrap:wrap;}
+  .p-meta span::before{content:'·'; margin-right:14px; color:var(--text-faint);}
+  .p-meta span:first-child::before{content:''; margin-right:0;}
+  .p-role-pill{
+    display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.05em;
+    padding:4px 10px; border-radius:3px; background:rgba(47,167,201,0.12); color:var(--zone-blue);
+    margin-top:10px;
+  }
+
+  .p-quick-stats{display:flex; gap:28px;}
+  .p-quick-stat{text-align:right;}
+  .p-quick-stat .label{font-size:11px; color:var(--text-faint); letter-spacing:0.05em; text-transform:uppercase;}
+  .p-quick-stat .value{font-family:'JetBrains Mono',monospace; font-size:22px; color:var(--live); margin-top:4px;}
+  .p-quick-stat .value.amber{color:var(--amber);}
+
+  .tabs{display:flex; gap:4px; padding:0 40px; border-bottom:1px solid var(--line);}
+  .tab{padding:14px 18px; font-size:13px; font-weight:500; color:var(--text-faint); border-bottom:2px solid transparent; cursor:pointer;}
+  .tab.active{color:var(--text); border-bottom-color:var(--zone-blue);}
+
+  main{padding:32px 40px 48px; max-width:1400px; margin:0 auto;}
+  .layout{display:grid; grid-template-columns:1.6fr 1fr; gap:32px;}
+  .panel{background:var(--bg-panel); border:1px solid var(--line); border-radius:4px; padding:24px; margin-bottom:24px;}
+  .panel-title{font-size:15px; font-weight:600; margin-bottom:18px;}
+
+  /* stat grid */
+  .stat-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:8px;}
+  .stat-box{background:var(--bg); border:1px solid var(--line); border-radius:4px; padding:14px;}
+  .stat-box .label{font-size:11px; color:var(--text-faint); letter-spacing:0.04em; text-transform:uppercase;}
+  .stat-box .value{font-family:'JetBrains Mono',monospace; font-size:22px; margin-top:6px;}
+
+  /* match log */
+  table.matchlog{width:100%; border-collapse:collapse; font-size:13px;}
+  table.matchlog th{
+    text-align:left; padding:9px 10px; font-size:11px; color:var(--text-faint);
+    border-bottom:1px solid var(--line); letter-spacing:0.05em; text-transform:uppercase;
+  }
+  table.matchlog td{padding:10px; border-bottom:1px solid rgba(35,43,50,0.5);}
+  .rk{font-family:'JetBrains Mono',monospace;}
+  .rk.win{color:var(--amber);}
+  .kd-good{color:var(--live);}
+
+  /* career timeline */
+  .timeline-item{
+    display:flex; gap:14px; padding:14px 0; border-bottom:1px solid rgba(35,43,50,0.5);
+  }
+  .timeline-item:last-child{border-bottom:none;}
+  .timeline-year{font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--text-faint); width:44px; flex-shrink:0; padding-top:2px;}
+  .timeline-text{font-size:13px; color:var(--text-dim); line-height:1.5;}
+  .timeline-text b{color:var(--text);}
+
+  /* sidebar */
+  .team-card{display:flex; align-items:center; gap:12px; margin-bottom:16px;}
+  .team-card-icon{width:40px; height:40px; border-radius:6px; background:var(--bg-panel-raised); border:1px solid var(--line);}
+  .team-card-name{font-weight:600; font-size:14px;}
+  .team-card-sub{font-size:12px; color:var(--text-faint);}
+
+  .loadout-item{display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid rgba(35,43,50,0.5); font-size:13px;}
+  .loadout-item:last-child{border-bottom:none;}
+  .loadout-item .gun{color:var(--text);}
+  .loadout-item .pick-rate{font-family:'JetBrains Mono',monospace; color:var(--zone-blue);}
+
+  .social-row{display:flex; gap:10px; margin-top:4px;}
+  .social-pill{
+    font-size:12px; color:var(--text-dim); border:1px solid var(--line); border-radius:20px;
+    padding:6px 14px;
+  }
+
+  @media (max-width: 900px){
+    nav{padding:14px 20px;} .navlinks{display:none;}
+    .breadcrumb{padding:14px 20px 0;}
+    .p-header{padding:24px 20px;}
+    .p-quick-stats{width:100%; justify-content:space-between; gap:12px;}
+    .tabs{padding:0 20px; overflow-x:auto;}
+    main{padding:24px 20px;}
+    .layout{grid-template-columns:1fr;}
+    .stat-grid{grid-template-columns:repeat(2,1fr);}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" style="text-decoration:none;"><div class="logo" style="cursor:pointer;"><span class="dot"></span>ZONE<span style="color:var(--zone-blue)">.GG</span></div></a>
+  <div class="navlinks">
+    <a href="index.html">Live</a>
+    <a href="tournament.html">Tournaments</a>
+    <a href="tournament.html">Standings</a>
+    <a href="player-profile.html" class="active">Players</a>
+    <a href="news-article.html">News</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a><span class="sep">/</span><a href="player-profile.html">Players</a><span class="sep">/</span><span class="current">GhostAim</span>
+</div>
+
+<div class="p-header">
+  <div class="p-avatar">GA</div>
+  <div class="p-name-block">
+    <div class="p-ign">IGN — GHOSTAIM</div>
+    <div class="p-name display">Ronak Sharma</div>
+    <div class="p-meta">
+      <span>Age 21</span>
+      <span>India</span>
+      <span>Team Soul</span>
+    </div>
+    <div class="p-role-pill">SNIPER / IGL</div>
+  </div>
+  <div class="p-quick-stats">
+    <div class="p-quick-stat"><div class="label">K/D Ratio</div><div class="value">4.8</div></div>
+    <div class="p-quick-stat"><div class="label">Avg Dmg</div><div class="value amber">612</div></div>
+    <div class="p-quick-stat"><div class="label">Rating</div><div class="value">9.1</div></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active">Overview</div>
+  <div class="tab">Match Log</div>
+  <div class="tab">Loadouts</div>
+  <div class="tab">Career</div>
+</div>
+
+<main>
+  <div class="layout">
+    <div>
+      <div class="panel">
+        <div class="panel-title">Season Stats — BMPS Season 4</div>
+        <div class="stat-grid">
+          <div class="stat-box"><div class="label">Kills</div><div class="value">62</div></div>
+          <div class="stat-box"><div class="label">Matches</div><div class="value">14</div></div>
+          <div class="stat-box"><div class="label">Chicken Dinners</div><div class="value">3</div></div>
+          <div class="stat-box"><div class="label">Survival Time</div><div class="value">19.4m</div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Recent Match Log</div>
+        <table class="matchlog">
+          <thead><tr><th>Match</th><th>Map</th><th>Placement</th><th>Kills</th><th>Damage</th></tr></thead>
+          <tbody>
+            <tr><td>vs GodLike Esports</td><td>Erangel</td><td class="rk win">#1</td><td>7</td><td class="kd-good">890</td></tr>
+            <tr><td>vs Team XSpark</td><td>Erangel</td><td class="rk">#3</td><td>5</td><td>640</td></tr>
+            <tr><td>vs Global Esports</td><td>Miramar</td><td class="rk win">#1</td><td>9</td><td class="kd-good">1020</td></tr>
+            <tr><td>vs Enigma Gaming</td><td>Sanhok</td><td class="rk">#5</td><td>3</td><td>410</td></tr>
+            <tr><td>vs Revenant Esports</td><td>Erangel</td><td class="rk win">#1</td><td>8</td><td class="kd-good">760</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Career Timeline</div>
+        <div class="timeline-item">
+          <div class="timeline-year mono">2026</div>
+          <div class="timeline-text"><b>BMPS Season 4</b> — Named MVP after group stage, leading kill charts with 62 eliminations.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year mono">2025</div>
+          <div class="timeline-text">Joined <b>Team Soul</b> as primary sniper, replacing outgoing roster member.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year mono">2024</div>
+          <div class="timeline-text">Won <b>BGIS 2024</b> with previous team Enigma Gaming, first major domestic title.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year mono">2022</div>
+          <div class="timeline-text">Turned professional after standout performance in regional scrims circuit.</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel">
+        <div class="panel-title">Current Team</div>
+        <div class="team-card">
+          <div class="team-card-icon"></div>
+          <div>
+            <div class="team-card-name">Team Soul</div>
+            <div class="team-card-sub">Joined 2025 · #1 BMPS Season 4</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Weapon Loadout</div>
+        <div class="loadout-item"><span class="gun">AWM</span><span class="pick-rate">68% pick rate</span></div>
+        <div class="loadout-item"><span class="gun">M416</span><span class="pick-rate">54% pick rate</span></div>
+        <div class="loadout-item"><span class="gun">Kar98k</span><span class="pick-rate">31% pick rate</span></div>
+        <div class="loadout-item"><span class="gun">Vector</span><span class="pick-rate">19% pick rate</span></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Follow</div>
+        <div class="social-row">
+          <div class="social-pill">YouTube</div>
+          <div class="social-pill">Instagram</div>
+          <div class="social-pill">X</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>

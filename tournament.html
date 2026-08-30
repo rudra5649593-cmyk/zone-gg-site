@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMPS Season 4 Finals · ZONE.GG</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --bg: #0A0D10;
+    --bg-panel: #10151A;
+    --bg-panel-raised: #151B21;
+    --line: #232B32;
+    --zone-blue: #2FA7C9;
+    --zone-blue-dim: #1A5A6E;
+    --danger: #FF4E3A;
+    --live: #3DDC84;
+    --amber: #FFB020;
+    --text: #E7ECEF;
+    --text-dim: #8A97A0;
+    --text-faint: #52606A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .display{font-family:'Rajdhani',sans-serif; font-weight:700;}
+
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 40px; border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:50; background:rgba(10,13,16,0.92); backdrop-filter:blur(8px);
+  }
+  .logo{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:24px; display:flex; align-items:center; gap:8px;}
+  .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--live); box-shadow:0 0 8px var(--live);}
+  .navlinks{display:flex; gap:32px; font-size:14px; font-weight:500; color:var(--text-dim);}
+  .navlinks a{color:inherit; text-decoration:none;}
+  .navlinks a.active{color:var(--zone-blue);}
+
+  .breadcrumb{padding:16px 40px 0; font-size:12px; color:var(--text-faint);}
+  .breadcrumb a{color:var(--text-faint); text-decoration:none;}
+  .breadcrumb .sep{margin:0 6px;}
+  .breadcrumb .current{color:var(--text-dim);}
+
+  /* ===== Tournament header ===== */
+  .t-header{
+    padding:28px 40px; border-bottom:1px solid var(--line);
+    display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:20px;
+  }
+  .t-status-pill{
+    display:inline-flex; align-items:center; gap:8px; font-size:11px; font-weight:700;
+    letter-spacing:0.08em; color:var(--amber); margin-bottom:10px;
+  }
+  .t-status-pill .pulse{width:7px;height:7px;border-radius:50%;background:var(--amber); animation:pulse 1.6s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.4;}}
+  .t-title{font-size:32px;}
+  .t-sub{font-size:13px; color:var(--text-dim); margin-top:6px;}
+  .t-stats{display:flex; gap:32px;}
+  .t-stat{text-align:right;}
+  .t-stat .label{font-size:11px; color:var(--text-faint); letter-spacing:0.05em; text-transform:uppercase;}
+  .t-stat .value{font-family:'JetBrains Mono',monospace; font-size:20px; color:var(--live); margin-top:4px;}
+  .t-stat .value.amber{color:var(--amber);}
+  .t-stat .value.plain{color:var(--text);}
+
+  /* ===== Tabs ===== */
+  .tabs{
+    display:flex; gap:4px; padding:0 40px; border-bottom:1px solid var(--line);
+  }
+  .tab{
+    padding:14px 18px; font-size:13px; font-weight:500; color:var(--text-faint);
+    border-bottom:2px solid transparent; cursor:pointer;
+  }
+  .tab.active{color:var(--text); border-bottom-color:var(--zone-blue);}
+
+  main{padding:32px 40px 48px; max-width:1400px; margin:0 auto;}
+  .section{margin-bottom:44px;}
+  .section-head{
+    display:flex; align-items:baseline; justify-content:space-between;
+    margin-bottom:18px; border-bottom:1px solid var(--line); padding-bottom:12px;
+  }
+  .section-head h2{font-size:20px;}
+
+  /* ===== Schedule ===== */
+  .day-group{margin-bottom:22px;}
+  .day-label{
+    font-size:11px; letter-spacing:0.08em; color:var(--text-faint); text-transform:uppercase;
+    margin-bottom:10px; display:flex; align-items:center; gap:10px;
+  }
+  .day-label::after{content:''; flex:1; height:1px; background:var(--line);}
+
+  .match-row{
+    display:flex; align-items:center; gap:20px;
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:4px;
+    padding:14px 18px; margin-bottom:8px;
+  }
+  .match-row.live{border-color:var(--zone-blue-dim);}
+  .match-row .time-col{
+    width:60px; font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--text-faint); flex-shrink:0;
+  }
+  .match-row.live .time-col{color:var(--live);}
+  .match-teams{flex:1; display:flex; align-items:center; gap:14px; font-size:14px;}
+  .match-teams .t-name{font-weight:600;}
+  .match-teams .vs{color:var(--text-faint); font-size:12px;}
+  .match-teams .score{font-family:'JetBrains Mono',monospace; color:var(--zone-blue); margin-left:4px;}
+  .match-tag{
+    font-size:10px; font-weight:700; letter-spacing:0.06em; padding:3px 8px; border-radius:3px;
+  }
+  .match-tag.live{background:rgba(61,220,132,0.15); color:var(--live);}
+  .match-tag.done{background:rgba(255,255,255,0.06); color:var(--text-faint);}
+  .match-tag.upcoming{background:rgba(47,167,201,0.12); color:var(--zone-blue);}
+
+  /* ===== Bracket ===== */
+  .bracket{
+    display:flex; gap:36px; overflow-x:auto; padding-bottom:12px;
+  }
+  .bracket-round{display:flex; flex-direction:column; justify-content:space-around; gap:16px; min-width:210px;}
+  .bracket-round-title{
+    font-size:11px; letter-spacing:0.08em; color:var(--text-faint); text-transform:uppercase; margin-bottom:6px;
+  }
+  .bracket-match{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:4px; overflow:hidden;
+  }
+  .bracket-team{
+    display:flex; justify-content:space-between; padding:9px 12px; font-size:13px;
+    border-bottom:1px solid var(--line);
+  }
+  .bracket-team:last-child{border-bottom:none;}
+  .bracket-team.winner{color:var(--text); font-weight:600;}
+  .bracket-team.loser{color:var(--text-faint);}
+  .bracket-team .score{font-family:'JetBrains Mono',monospace;}
+  .bracket-team.winner .score{color:var(--live);}
+
+  /* ===== Prize breakdown ===== */
+  .prize-table{width:100%; border-collapse:collapse; font-size:13px;}
+  .prize-table th{
+    text-align:left; padding:9px 12px; font-size:11px; color:var(--text-faint);
+    border-bottom:1px solid var(--line); text-transform:uppercase; letter-spacing:0.05em;
+  }
+  .prize-table td{padding:11px 12px; border-bottom:1px solid rgba(35,43,50,0.5);}
+  .prize-table .amt{font-family:'JetBrains Mono',monospace; color:var(--live); text-align:right;}
+  .prize-place{font-family:'JetBrains Mono',monospace; color:var(--text-faint);}
+  .prize-place.gold{color:var(--amber);}
+
+  @media (max-width: 900px){
+    nav{padding:14px 20px;} .navlinks{display:none;}
+    .breadcrumb{padding:14px 20px 0;}
+    .t-header{padding:20px; flex-direction:column; align-items:flex-start;}
+    .t-stats{gap:20px;}
+    .tabs{padding:0 20px; overflow-x:auto;}
+    main{padding:24px 20px;}
+    .match-teams{flex-wrap:wrap;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" style="text-decoration:none;"><div class="logo" style="cursor:pointer;"><span class="dot"></span>ZONE<span style="color:var(--zone-blue)">.GG</span></div></a>
+  <div class="navlinks">
+    <a href="index.html">Live</a>
+    <a href="tournament.html" class="active">Tournaments</a>
+    <a href="tournament.html">Standings</a>
+    <a href="player-profile.html">Players</a>
+    <a href="news-article.html">News</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a><span class="sep">/</span><a href="tournament.html">Tournaments</a><span class="sep">/</span><span class="current">BMPS Season 4 Finals</span>
+</div>
+
+<div class="t-header">
+  <div>
+    <div class="t-status-pill"><span class="pulse"></span>GROUP STAGE — DAY 2 OF 3</div>
+    <div class="t-title display">BMPS Season 4 — Grand Finals</div>
+    <div class="t-sub">Aug 28–30, 2026 · LAN · Delhi, India · 18 teams</div>
+  </div>
+  <div class="t-stats">
+    <div class="t-stat"><div class="label">Prize Pool</div><div class="value">₹50,00,000</div></div>
+    <div class="t-stat"><div class="label">Format</div><div class="value plain">Erangel · PPK</div></div>
+    <div class="t-stat"><div class="label">Matches Left</div><div class="value amber">4</div></div>
+  </div>
+</div>
+
+<div class="tabs">
+  <div class="tab active">Schedule</div>
+  <div class="tab">Bracket</div>
+  <div class="tab">Standings</div>
+  <div class="tab">Teams</div>
+  <div class="tab">Prize Breakdown</div>
+</div>
+
+<main>
+
+  <div class="section">
+    <div class="section-head"><h2 class="display">Schedule</h2></div>
+
+    <div class="day-group">
+      <div class="day-label">Today · Aug 29</div>
+      <div class="match-row live" style="cursor:pointer;" onclick="location.href='match-detail.html'">
+        <div class="time-col">14:20</div>
+        <div class="match-teams">
+          <span class="t-name">Team Soul</span><span class="score">18</span>
+          <span class="vs">vs</span>
+          <span class="t-name">GodLike Esports</span><span class="score">15</span>
+        </div>
+        <span class="match-tag live">● LIVE</span>
+      </div>
+      <div class="match-row">
+        <div class="time-col mono">15:10</div>
+        <div class="match-teams">
+          <span class="t-name">Team XSpark</span>
+          <span class="vs">vs</span>
+          <span class="t-name">Global Esports</span>
+        </div>
+        <span class="match-tag upcoming">UPCOMING</span>
+      </div>
+      <div class="match-row">
+        <div class="time-col mono">16:00</div>
+        <div class="match-teams">
+          <span class="t-name">Enigma Gaming</span>
+          <span class="vs">vs</span>
+          <span class="t-name">Team Vertex</span>
+        </div>
+        <span class="match-tag upcoming">UPCOMING</span>
+      </div>
+    </div>
+
+    <div class="day-group">
+      <div class="day-label">Yesterday · Aug 28</div>
+      <div class="match-row">
+        <div class="time-col mono">17:40</div>
+        <div class="match-teams">
+          <span class="t-name">GodLike Esports</span><span class="score">21</span>
+          <span class="vs">vs</span>
+          <span class="t-name">Revenant Esports</span><span class="score">9</span>
+        </div>
+        <span class="match-tag done">FINISHED</span>
+      </div>
+      <div class="match-row">
+        <div class="time-col mono">16:50</div>
+        <div class="match-teams">
+          <span class="t-name">Team Soul</span><span class="score">17</span>
+          <span class="vs">vs</span>
+          <span class="t-name">Team XSpark</span><span class="score">14</span>
+        </div>
+        <span class="match-tag done">FINISHED</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2 class="display">Playoff Bracket</h2></div>
+    <div class="bracket">
+      <div class="bracket-round">
+        <div class="bracket-round-title">Upper Round 1</div>
+        <div class="bracket-match">
+          <div class="bracket-team winner"><span>Team Soul</span><span class="score">17</span></div>
+          <div class="bracket-team loser"><span>Team XSpark</span><span class="score">14</span></div>
+        </div>
+        <div class="bracket-match">
+          <div class="bracket-team winner"><span>GodLike Esports</span><span class="score">21</span></div>
+          <div class="bracket-team loser"><span>Revenant Esports</span><span class="score">9</span></div>
+        </div>
+        <div class="bracket-match">
+          <div class="bracket-team winner"><span>Global Esports</span><span class="score">19</span></div>
+          <div class="bracket-team loser"><span>Team Vertex</span><span class="score">12</span></div>
+        </div>
+        <div class="bracket-match">
+          <div class="bracket-team winner"><span>Enigma Gaming</span><span class="score">16</span></div>
+          <div class="bracket-team loser"><span>Blind Esports</span><span class="score">10</span></div>
+        </div>
+      </div>
+
+      <div class="bracket-round">
+        <div class="bracket-round-title">Semi Finals</div>
+        <div class="bracket-match">
+          <div class="bracket-team"><span>Team Soul</span><span class="score">—</span></div>
+          <div class="bracket-team"><span>GodLike Esports</span><span class="score">—</span></div>
+        </div>
+        <div class="bracket-match">
+          <div class="bracket-team"><span>Global Esports</span><span class="score">—</span></div>
+          <div class="bracket-team"><span>Enigma Gaming</span><span class="score">—</span></div>
+        </div>
+      </div>
+
+      <div class="bracket-round">
+        <div class="bracket-round-title">Grand Final</div>
+        <div class="bracket-match">
+          <div class="bracket-team"><span>TBD</span><span class="score">—</span></div>
+          <div class="bracket-team"><span>TBD</span><span class="score">—</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head"><h2 class="display">Prize Breakdown</h2></div>
+    <table class="prize-table">
+      <thead><tr><th>Placement</th><th>Team</th><th style="text-align:right;">Prize</th></tr></thead>
+      <tbody>
+        <tr><td class="prize-place gold">🏆 1st</td><td>TBD</td><td class="amt">₹20,00,000</td></tr>
+        <tr><td class="prize-place">2nd</td><td>TBD</td><td class="amt">₹12,00,000</td></tr>
+        <tr><td class="prize-place">3rd</td><td>TBD</td><td class="amt">₹7,00,000</td></tr>
+        <tr><td class="prize-place">4th</td><td>TBD</td><td class="amt">₹4,00,000</td></tr>
+        <tr><td class="prize-place">5th–6th</td><td>—</td><td class="amt">₹2,50,000 each</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+</main>
+
+</body>
+</html>
