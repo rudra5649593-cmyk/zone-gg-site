@@ -143,8 +143,8 @@
   <div class="navlinks">
     <a href="index.html">Live</a>
     <a href="tournament.html">Tournaments</a>
-    <a href="tournament.html">Standings</a>
-    <a href="player-profile.html">Players</a>
+    <a href="standings.html">Standings</a>
+    <a href="players.html">Players</a>
     <a href="news-article.html" class="active">News</a>
   </div>
 </nav>
@@ -201,26 +201,87 @@
 
       <div class="comments-section">
         <div class="comments-title">💬 Discussion</div>
-        <div class="comment">
-          <div class="avatar"></div>
-          <div class="comment-body">
-            <div><span class="comment-user mod">Analyst_Dev</span><span class="comment-text">Smart move honestly, why fix a roster that's topping the standings.</span></div>
-            <div class="comment-time">1 hour ago</div>
-          </div>
+        <div id="commentsList">
+          <div class="comment"><div class="comment-body"><div class="comment-text" style="color:var(--text-faint);">Loading comments…</div></div></div>
         </div>
-        <div class="comment">
-          <div class="avatar"></div>
-          <div class="comment-body">
-            <div><span class="comment-user">RushGodz_YT</span><span class="comment-text">Zealous is a great pickup, his VOD reviews are next level.</span></div>
-            <div class="comment-time">2 hours ago</div>
+        <div class="comment-input" style="flex-direction:column; align-items:stretch;">
+          <input type="text" id="commentNameInput" placeholder="Your name" style="margin-bottom:8px;">
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="commentInput" placeholder="Join the discussion...">
+            <button id="postCommentBtn">Post</button>
           </div>
-        </div>
-        <div class="comment-input">
-          <input type="text" placeholder="Join the discussion...">
-          <button>Post</button>
         </div>
       </div>
     </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      const SUPABASE_URL = 'https://huimmblsrqycszszkyve.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_BX3Gv_oqIqyLkGZGr1Xpig_2xQyoJas';
+      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      const MATCH_ID = 'news-team-soul-resigns-roster';
+
+      function escapeHtml(str){
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function timeAgo(iso){
+        const diff = Math.floor((Date.now() - new Date(iso).getTime())/1000);
+        if(diff < 60) return 'just now';
+        if(diff < 3600) return Math.floor(diff/60) + ' min ago';
+        if(diff < 86400) return Math.floor(diff/3600) + ' hr ago';
+        return Math.floor(diff/86400) + ' day ago';
+      }
+
+      function renderComments(comments){
+        const container = document.getElementById('commentsList');
+        if(!comments || comments.length === 0){
+          container.innerHTML = '<div class="comment"><div class="comment-body"><div class="comment-text" style="color:var(--text-faint);">No comments yet — be the first to comment.</div></div></div>';
+          return;
+        }
+        container.innerHTML = comments.map(c => `
+          <div class="comment">
+            <div class="avatar"></div>
+            <div class="comment-body">
+              <div><span class="comment-user">${escapeHtml(c.username)}</span><span class="comment-text">${escapeHtml(c.message)}</span></div>
+              <div class="comment-time">${timeAgo(c.created_at)}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      async function loadComments(){
+        const { data, error } = await sb
+          .from('comments')
+          .select('*')
+          .eq('match_id', MATCH_ID)
+          .order('created_at', { ascending: false });
+        if(error){ console.error(error); return; }
+        renderComments(data);
+      }
+
+      async function postComment(){
+        const nameInput = document.getElementById('commentNameInput');
+        const msgInput = document.getElementById('commentInput');
+        const username = nameInput.value.trim() || 'Anonymous';
+        const message = msgInput.value.trim();
+        if(!message) return;
+        const btn = document.getElementById('postCommentBtn');
+        btn.disabled = true;
+        const { error } = await sb.from('comments').insert([{ username, message, match_id: MATCH_ID }]);
+        btn.disabled = false;
+        if(error){ console.error(error); alert('Comment post nahi ho paya, dubara try karo.'); return; }
+        msgInput.value = '';
+        loadComments();
+      }
+
+      document.getElementById('postCommentBtn').addEventListener('click', postComment);
+      document.getElementById('commentInput').addEventListener('keypress', e => { if(e.key === 'Enter') postComment(); });
+
+      loadComments();
+    </script>
 
     <div>
       <div class="panel">
