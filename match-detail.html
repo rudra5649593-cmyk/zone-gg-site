@@ -276,7 +276,7 @@
   <script>
     const SUPABASE_URL = 'https://huimmblsrqycszszkyve.supabase.co';
     const SUPABASE_KEY = 'sb_publishable_BX3Gv_oqIqyLkGZGr1Xpig_2xQyoJas';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
     const MATCH_ID = 'match-3-soul-vs-godlike';
 
     function escapeHtml(str){
@@ -311,7 +311,7 @@
     }
 
     async function loadComments(){
-      const { data, error } = await supabase
+      const { data, error } = await sb
         .from('comments')
         .select('*')
         .eq('match_id', MATCH_ID)
@@ -328,7 +328,7 @@
       if(!message) return;
       const btn = document.getElementById('postCommentBtn');
       btn.disabled = true;
-      const { error } = await supabase.from('comments').insert([{ username, message, match_id: MATCH_ID }]);
+      const { error } = await sb.from('comments').insert([{ username, message, match_id: MATCH_ID }]);
       btn.disabled = false;
       if(error){ console.error(error); alert('Comment post nahi ho paya, dubara try karo.'); return; }
       msgInput.value = '';
