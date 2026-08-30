@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Soul re-signs full roster ahead of BGIS 2026 · ZONE.GG</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+  :root{
+    --bg: #0A0D10;
+    --bg-panel: #10151A;
+    --bg-panel-raised: #151B21;
+    --line: #232B32;
+    --zone-blue: #2FA7C9;
+    --zone-blue-dim: #1A5A6E;
+    --danger: #FF4E3A;
+    --live: #3DDC84;
+    --amber: #FFB020;
+    --text: #E7ECEF;
+    --text-dim: #8A97A0;
+    --text-faint: #52606A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg); color:var(--text); font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+  .display{font-family:'Rajdhani',sans-serif; font-weight:700;}
+
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:18px 40px; border-bottom:1px solid var(--line);
+    position:sticky; top:0; z-index:50; background:rgba(10,13,16,0.92); backdrop-filter:blur(8px);
+  }
+  .logo{font-family:'Rajdhani',sans-serif; font-weight:700; font-size:24px; display:flex; align-items:center; gap:8px;}
+  .logo .dot{width:9px;height:9px;border-radius:50%;background:var(--live); box-shadow:0 0 8px var(--live);}
+  .navlinks{display:flex; gap:32px; font-size:14px; font-weight:500; color:var(--text-dim);}
+  .navlinks a{color:inherit; text-decoration:none;}
+  .navlinks a.active{color:var(--zone-blue);}
+
+  .breadcrumb{padding:16px 40px 0; font-size:12px; color:var(--text-faint); max-width:1400px; margin:0 auto;}
+  .breadcrumb a{color:var(--text-faint); text-decoration:none;}
+  .breadcrumb .sep{margin:0 6px;}
+  .breadcrumb .current{color:var(--text-dim);}
+
+  main{padding:24px 40px 48px; max-width:1400px; margin:0 auto;}
+  .layout{display:grid; grid-template-columns:1.6fr 1fr; gap:40px;}
+
+  /* ===== Article ===== */
+  .article-tag{
+    display:inline-block; font-size:11px; font-weight:700; letter-spacing:0.08em;
+    color:var(--zone-blue); background:rgba(47,167,201,0.12); padding:4px 10px;
+    border-radius:3px; margin-bottom:14px;
+  }
+  .article-title{font-size:32px; line-height:1.2; margin-bottom:16px;}
+  .article-meta{
+    display:flex; align-items:center; gap:14px; font-size:12px; color:var(--text-faint);
+    padding-bottom:20px; margin-bottom:24px; border-bottom:1px solid var(--line);
+  }
+  .article-meta .author{color:var(--text-dim); font-weight:500;}
+  .article-meta .dot-sep{width:3px; height:3px; border-radius:50%; background:var(--text-faint);}
+
+  .article-cover{
+    width:100%; height:340px; border-radius:6px; margin-bottom:24px;
+    background:linear-gradient(135deg, var(--zone-blue-dim), var(--bg-panel-raised));
+    border:1px solid var(--line);
+  }
+
+  .article-body{font-size:16px; line-height:1.75; color:var(--text-dim);}
+  .article-body p{margin-bottom:20px;}
+  .article-body p:first-of-type{
+    font-size:18px; color:var(--text); font-weight:400;
+  }
+  .article-body strong{color:var(--text); font-weight:600;}
+  .pull-quote{
+    border-left:3px solid var(--zone-blue); padding:4px 0 4px 20px; margin:28px 0;
+    font-size:19px; font-family:'Rajdhani',sans-serif; font-weight:600; color:var(--text);
+  }
+  .article-subhead{font-size:20px; color:var(--text); margin:32px 0 14px; font-family:'Rajdhani',sans-serif; font-weight:700;}
+
+  .roster-box{
+    background:var(--bg-panel); border:1px solid var(--line); border-radius:4px;
+    padding:18px 20px; margin:24px 0;
+  }
+  .roster-box-title{font-size:11px; letter-spacing:0.08em; color:var(--text-faint); text-transform:uppercase; margin-bottom:12px;}
+  .roster-row{
+    display:flex; justify-content:space-between; padding:8px 0; font-size:13px;
+    border-bottom:1px solid rgba(35,43,50,0.5);
+  }
+  .roster-row:last-child{border-bottom:none;}
+  .roster-row .role{color:var(--text-faint);}
+
+  .article-tags{display:flex; gap:8px; margin-top:32px; flex-wrap:wrap;}
+  .article-tag-pill{
+    font-size:12px; color:var(--text-dim); border:1px solid var(--line);
+    border-radius:20px; padding:6px 14px;
+  }
+
+  /* comments */
+  .comments-section{margin-top:40px; padding-top:24px; border-top:1px solid var(--line);}
+  .comments-title{font-size:16px; font-weight:600; margin-bottom:18px;}
+  .comment{display:flex; gap:12px; margin-bottom:18px;}
+  .avatar{width:32px;height:32px;border-radius:50%;background:var(--zone-blue-dim); flex-shrink:0;}
+  .comment-body{font-size:13px;}
+  .comment-user{font-weight:600; margin-right:6px;}
+  .comment-user.mod{color:var(--amber);}
+  .comment-text{color:var(--text-dim); line-height:1.5;}
+  .comment-time{font-size:11px; color:var(--text-faint); margin-top:3px;}
+  .comment-input{display:flex; gap:8px; margin-top:18px; padding-top:18px; border-top:1px dashed var(--line);}
+  .comment-input input{
+    flex:1; background:var(--bg); border:1px solid var(--line); border-radius:20px;
+    padding:9px 16px; color:var(--text); font-size:13px; font-family:inherit;
+  }
+  .comment-input input::placeholder{color:var(--text-faint);}
+  .comment-input button{
+    background:var(--zone-blue); color:var(--bg); border:none; border-radius:20px;
+    padding:9px 20px; font-size:13px; font-weight:600; cursor:pointer;
+  }
+
+  /* ===== Sidebar ===== */
+  .panel{background:var(--bg-panel); border:1px solid var(--line); border-radius:4px; padding:20px; margin-bottom:24px;}
+  .panel-title{font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:var(--text-faint); margin-bottom:16px;}
+
+  .related-item{display:flex; gap:12px; padding:12px 0; border-bottom:1px solid rgba(35,43,50,0.5);}
+  .related-item:last-child{border-bottom:none;}
+  .related-thumb{width:64px; height:48px; flex-shrink:0; border-radius:3px; background:var(--bg-panel-raised); border:1px solid var(--line);}
+  .related-title{font-size:13px; font-weight:500; line-height:1.4; margin-bottom:4px;}
+  .related-meta{font-size:11px; color:var(--text-faint);}
+
+  @media (max-width: 900px){
+    nav{padding:14px 20px;} .navlinks{display:none;}
+    .breadcrumb{padding:14px 20px 0;}
+    main{padding:20px;}
+    .layout{grid-template-columns:1fr;}
+    .article-title{font-size:24px;}
+    .article-cover{height:200px;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" style="text-decoration:none;"><div class="logo" style="cursor:pointer;"><span class="dot"></span>ZONE<span style="color:var(--zone-blue)">.GG</span></div></a>
+  <div class="navlinks">
+    <a href="index.html">Live</a>
+    <a href="tournament.html">Tournaments</a>
+    <a href="standings.html">Standings</a>
+    <a href="players.html">Players</a>
+    <a href="news-article.html" class="active">News</a>
+  </div>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a><span class="sep">/</span><a href="news-article.html">News</a><span class="sep">/</span><span class="current">Team Soul re-signs roster</span>
+</div>
+
+<main>
+  <div class="layout">
+    <article>
+      <div class="article-tag">ROSTER NEWS</div>
+      <h1 class="article-title display">Team Soul re-signs full roster ahead of BGIS 2026, adds analyst coach Zealous</h1>
+      <div class="article-meta">
+        <span class="author">Esports Desk</span>
+        <span class="dot-sep"></span>
+        <span>3 hours ago</span>
+        <span class="dot-sep"></span>
+        <span>4 min read</span>
+      </div>
+
+      <div class="article-cover"></div>
+
+      <div class="article-body">
+        <p>Team Soul has confirmed the retention of its entire five-man roster through the 2026–27 season, locking in the core that carried them to a dominant run in BMPS Season 4 heading into the BGIS 2026 qualifiers.</p>
+
+        <p>The organisation also announced the addition of <strong>Zealous</strong> as a full-time analyst coach, a move the team says was already in motion before the current playoffs began. Zealous previously worked with two mid-tier squads in an unofficial capacity, focusing on zone-rotation strategy and post-match VOD review.</p>
+
+        <div class="pull-quote">"We didn't want to break something that's working — the roster earned this extension on the server, not off it."</div>
+
+        <p>Team captain <strong>GhostAim</strong> has been the standout performer of the season so far, leading the kill charts with 62 eliminations across 14 matches and picking up MVP honours in the group stage. Sources close to the org say his contract extension includes a leadership bonus tied to tournament placements.</p>
+
+        <div class="roster-box">
+          <div class="roster-box-title">Confirmed Roster — Team Soul</div>
+          <div class="roster-row"><span>Ronak "GhostAim" Sharma</span><span class="role">IGL / Sniper</span></div>
+          <div class="roster-row"><span>Mavi</span><span class="role">Assaulter</span></div>
+          <div class="roster-row"><span>ScoutOP</span><span class="role">Support</span></div>
+          <div class="roster-row"><span>Owais</span><span class="role">Fragger</span></div>
+          <div class="roster-row"><span>Zealous</span><span class="role">Analyst Coach (New)</span></div>
+        </div>
+
+        <div class="article-subhead">What this means for BGIS 2026</div>
+        <p>With qualifiers for Zone B beginning September 14, keeping the roster intact through the transfer window gives Soul continuity heading into what's expected to be one of the most competitive domestic circuits in recent memory. Rival organisations GodLike Esports and Team XSpark have both made mid-season roster changes, a gamble Soul's management explicitly chose to avoid.</p>
+
+        <p>The team's next assignment is the remainder of the BMPS Season 4 grand finals, where they currently sit first in standings with three chicken dinners through fourteen matches.</p>
+
+        <div class="article-tags">
+          <span class="article-tag-pill">Team Soul</span>
+          <span class="article-tag-pill">BGIS 2026</span>
+          <span class="article-tag-pill">Roster News</span>
+          <span class="article-tag-pill">GhostAim</span>
+        </div>
+      </div>
+
+      <div class="comments-section">
+        <div class="comments-title">💬 Discussion</div>
+        <div id="commentsList">
+          <div class="comment"><div class="comment-body"><div class="comment-text" style="color:var(--text-faint);">Loading comments…</div></div></div>
+        </div>
+        <div class="comment-input" style="flex-direction:column; align-items:stretch;">
+          <input type="text" id="commentNameInput" placeholder="Your name" style="margin-bottom:8px;">
+          <div style="display:flex; gap:8px;">
+            <input type="text" id="commentInput" placeholder="Join the discussion...">
+            <button id="postCommentBtn">Post</button>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+      const SUPABASE_URL = 'https://huimmblsrqycszszkyve.supabase.co';
+      const SUPABASE_KEY = 'sb_publishable_BX3Gv_oqIqyLkGZGr1Xpig_2xQyoJas';
+      const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      const MATCH_ID = 'news-team-soul-resigns-roster';
+
+      function escapeHtml(str){
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+      }
+
+      function timeAgo(iso){
+        const diff = Math.floor((Date.now() - new Date(iso).getTime())/1000);
+        if(diff < 60) return 'just now';
+        if(diff < 3600) return Math.floor(diff/60) + ' min ago';
+        if(diff < 86400) return Math.floor(diff/3600) + ' hr ago';
+        return Math.floor(diff/86400) + ' day ago';
+      }
+
+      function renderComments(comments){
+        const container = document.getElementById('commentsList');
+        if(!comments || comments.length === 0){
+          container.innerHTML = '<div class="comment"><div class="comment-body"><div class="comment-text" style="color:var(--text-faint);">No comments yet — be the first to comment.</div></div></div>';
+          return;
+        }
+        container.innerHTML = comments.map(c => `
+          <div class="comment">
+            <div class="avatar"></div>
+            <div class="comment-body">
+              <div><span class="comment-user">${escapeHtml(c.username)}</span><span class="comment-text">${escapeHtml(c.message)}</span></div>
+              <div class="comment-time">${timeAgo(c.created_at)}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      async function loadComments(){
+        const { data, error } = await sb
+          .from('comments')
+          .select('*')
+          .eq('match_id', MATCH_ID)
+          .order('created_at', { ascending: false });
+        if(error){ console.error(error); return; }
+        renderComments(data);
+      }
+
+      async function postComment(){
+        const nameInput = document.getElementById('commentNameInput');
+        const msgInput = document.getElementById('commentInput');
+        const username = nameInput.value.trim() || 'Anonymous';
+        const message = msgInput.value.trim();
+        if(!message) return;
+        const btn = document.getElementById('postCommentBtn');
+        btn.disabled = true;
+        const { error } = await sb.from('comments').insert([{ username, message, match_id: MATCH_ID }]);
+        btn.disabled = false;
+        if(error){ console.error(error); alert('Comment post nahi ho paya, dubara try karo.'); return; }
+        msgInput.value = '';
+        loadComments();
+      }
+
+      document.getElementById('postCommentBtn').addEventListener('click', postComment);
+      document.getElementById('commentInput').addEventListener('keypress', e => { if(e.key === 'Enter') postComment(); });
+
+      loadComments();
+    </script>
+
+    <div>
+      <div class="panel">
+        <div class="panel-title">Related News</div>
+        <div class="related-item">
+          <div class="related-thumb"></div>
+          <div>
+            <div class="related-title">Krafton announces expanded LAN circuit for BMPS Season 5</div>
+            <div class="related-meta">8 hours ago</div>
+          </div>
+        </div>
+        <div class="related-item">
+          <div class="related-thumb"></div>
+          <div>
+            <div class="related-title">Jonathan "Jokerr" out injured for GodLike's next two fixtures</div>
+            <div class="related-meta">1 day ago</div>
+          </div>
+        </div>
+        <div class="related-item">
+          <div class="related-thumb"></div>
+          <div>
+            <div class="related-title">BGIS 2026 prize pool confirmed at ₹2.5 crore, biggest yet</div>
+            <div class="related-meta">2 days ago</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">Trending Tags</div>
+        <div class="article-tags">
+          <span class="article-tag-pill">BMPS S4</span>
+          <span class="article-tag-pill">GodLike</span>
+          <span class="article-tag-pill">Transfers</span>
+          <span class="article-tag-pill">Erangel Meta</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
