@@ -243,17 +243,18 @@
         <div class="panel-title">🔮 Predict this match</div>
         <div class="predict-question">Who wins Match 3?</div>
         <div class="predict-option">
-          <div class="predict-option-head"><span>Team Soul</span><span class="pct">64%</span></div>
-          <div class="predict-bar-track"><div class="predict-bar-fill" style="width:64%"></div></div>
+          <div class="predict-option-head"><span>Team Soul</span><span class="pct" id="pctSoul">–</span></div>
+          <div class="predict-bar-track"><div class="predict-bar-fill" id="barSoul" style="width:0%"></div></div>
         </div>
         <div class="predict-option">
-          <div class="predict-option-head"><span>GodLike Esports</span><span class="pct">36%</span></div>
-          <div class="predict-bar-track"><div class="predict-bar-fill danger" style="width:36%"></div></div>
+          <div class="predict-option-head"><span>GodLike Esports</span><span class="pct" id="pctGodlike">–</span></div>
+          <div class="predict-bar-track"><div class="predict-bar-fill danger" id="barGodlike" style="width:0%"></div></div>
         </div>
         <div class="predict-vote-btns">
-          <button>Vote Soul</button>
-          <button>Vote GodLike</button>
+          <button id="voteSoulBtn">Vote Soul</button>
+          <button id="voteGodlikeBtn">Vote GodLike</button>
         </div>
+        <div id="predictStatus" style="font-size:11px; color:var(--text-faint); margin-top:10px;"></div>
       </div>
 
       <div class="panel">
@@ -339,6 +340,48 @@
     document.getElementById('commentInput').addEventListener('keypress', e => { if(e.key === 'Enter') postComment(); });
 
     loadComments();
+
+    // ---- Predictions ----
+    const VOTE_KEY = 'voted_' + MATCH_ID;
+
+    async function loadPredictions(){
+      const { data, error } = await sb.from('predictions').select('choice').eq('match_id', MATCH_ID);
+      if(error){ console.error(error); return; }
+      const soulCount = data.filter(d => d.choice === 'soul').length;
+      const godlikeCount = data.filter(d => d.choice === 'godlike').length;
+      const total = soulCount + godlikeCount;
+      const soulPct = total ? Math.round((soulCount/total)*100) : 50;
+      const godlikePct = total ? 100 - soulPct : 50;
+
+      document.getElementById('pctSoul').textContent = soulPct + '%';
+      document.getElementById('pctGodlike').textContent = godlikePct + '%';
+      document.getElementById('barSoul').style.width = soulPct + '%';
+      document.getElementById('barGodlike').style.width = godlikePct + '%';
+
+      const status = document.getElementById('predictStatus');
+      status.textContent = total + ' vote' + (total === 1 ? '' : 's') + ' so far';
+
+      if(localStorage.getItem(VOTE_KEY)){
+        document.getElementById('voteSoulBtn').disabled = true;
+        document.getElementById('voteGodlikeBtn').disabled = true;
+        status.textContent += ' · you voted ' + (localStorage.getItem(VOTE_KEY) === 'soul' ? 'Team Soul' : 'GodLike');
+      }
+    }
+
+    async function castVote(choice){
+      if(localStorage.getItem(VOTE_KEY)) return;
+      document.getElementById('voteSoulBtn').disabled = true;
+      document.getElementById('voteGodlikeBtn').disabled = true;
+      const { error } = await sb.from('predictions').insert([{ match_id: MATCH_ID, choice }]);
+      if(error){ console.error(error); alert('Vote save nahi hua, dubara try karo.'); loadPredictions(); return; }
+      localStorage.setItem(VOTE_KEY, choice);
+      loadPredictions();
+    }
+
+    document.getElementById('voteSoulBtn').addEventListener('click', () => castVote('soul'));
+    document.getElementById('voteGodlikeBtn').addEventListener('click', () => castVote('godlike'));
+
+    loadPredictions();
   </script>
 </main>
 
