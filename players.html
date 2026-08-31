@@ -124,136 +124,55 @@
     </div>
   </div>
 
-  <div class="grid">
-    <div class="p-card" onclick="location.href='player-profile.html'">
-      <div class="p-card-top">
-        <div class="p-avatar">GA</div>
-        <div>
-          <div class="p-ign">GhostAim</div>
-          <div class="p-team">Team Soul</div>
-          <div class="p-role">SNIPER / IGL</div>
-        </div>
-      </div>
-      <div class="p-stats">
-        <div class="p-stat"><div class="label">K/D</div><div class="value live">4.8</div></div>
-        <div class="p-stat"><div class="label">Kills</div><div class="value">62</div></div>
-        <div class="p-stat"><div class="label">Rating</div><div class="value amber">9.1</div></div>
-      </div>
-    </div>
-
-    <div class="p-card">
-      <div class="p-card-top">
-        <div class="p-avatar">MV</div>
-        <div>
-          <div class="p-ign">Mavi</div>
-          <div class="p-team">Team Soul</div>
-          <div class="p-role">ASSAULTER</div>
-        </div>
-      </div>
-      <div class="p-stats">
-        <div class="p-stat"><div class="label">K/D</div><div class="value live">3.9</div></div>
-        <div class="p-stat"><div class="label">Kills</div><div class="value">51</div></div>
-        <div class="p-stat"><div class="label">Rating</div><div class="value amber">8.4</div></div>
-      </div>
-    </div>
-
-    <div class="p-card">
-      <div class="p-card-top">
-        <div class="p-avatar">JK</div>
-        <div>
-          <div class="p-ign">Jokerr</div>
-          <div class="p-team">GodLike Esports</div>
-          <div class="p-role">FRAGGER</div>
-        </div>
-      </div>
-      <div class="p-stats">
-        <div class="p-stat"><div class="label">K/D</div><div class="value live">4.2</div></div>
-        <div class="p-stat"><div class="label">Kills</div><div class="value">55</div></div>
-        <div class="p-stat"><div class="label">Rating</div><div class="value amber">8.7</div></div>
-      </div>
-    </div>
-
-    <div class="p-card">
-      <div class="p-card-top">
-        <div class="p-avatar">OW</div>
-        <div>
-          <div class="p-ign">Owais</div>
-          <div class="p-team">GodLike Esports</div>
-          <div class="p-role">SUPPORT</div>
-        </div>
-      </div>
-      <div class="p-stats">
-        <div class="p-stat"><div class="label">K/D</div><div class="value live">3.1</div></div>
-        <div class="p-stat"><div class="label">Kills</div><div class="value">38</div></div>
-        <div class="p-stat"><div class="label">Rating</div><div class="value amber">7.6</div></div>
-      </div>
-    </div>
-
-    <div class="p-card">
-      <div class="p-card-top">
-        <div class="p-avatar">SC</div>
-        <div>
-          <div class="p-ign">ScoutOP</div>
-          <div class="p-team">Team Soul</div>
-          <div class="p-role">SUPPORT</div>
-        </div>
-      </div>
-      <div class="p-stats">
-        <div class="p-stat"><div class="label">K/D</div><div class="value live">2.8</div></div>
-        <div class="p-stat"><div class="label">Kills</div><div class="value">34</div></div>
-        <div class="p-stat"><div class="label">Rating</div><div class="value amber">7.2</div></div>
-      </div>
-    </div>
-
-    <div class="p-card">
-      <div class="p-card-top">
-        <div class="p-avatar">WR</div>
-        <div>
-          <div class="p-ign">Wraith</div>
-          <div class="p-team">Revenant Esports</div>
-          <div class="p-role">FRAGGER</div>
-        </div>
-      </div>
-      <div class="p-stats">
-        <div class="p-stat"><div class="label">K/D</div><div class="value live">2.4</div></div>
-        <div class="p-stat"><div class="label">Kills</div><div class="value">29</div></div>
-        <div class="p-stat"><div class="label">Rating</div><div class="value amber">6.5</div></div>
-      </div>
-    </div>
-
-    <div class="p-card">
-      <div class="p-card-top">
-        <div class="p-avatar">XS</div>
-        <div>
-          <div class="p-ign">Xylo</div>
-          <div class="p-team">Team XSpark</div>
-          <div class="p-role">IGL</div>
-        </div>
-      </div>
-      <div class="p-stats">
-        <div class="p-stat"><div class="label">K/D</div><div class="value live">2.9</div></div>
-        <div class="p-stat"><div class="label">Kills</div><div class="value">31</div></div>
-        <div class="p-stat"><div class="label">Rating</div><div class="value amber">7.0</div></div>
-      </div>
-    </div>
-
-    <div class="p-card">
-      <div class="p-card-top">
-        <div class="p-avatar">NV</div>
-        <div>
-          <div class="p-ign">Nova</div>
-          <div class="p-team">Global Esports</div>
-          <div class="p-role">SNIPER</div>
-        </div>
-      </div>
-      <div class="p-stats">
-        <div class="p-stat"><div class="label">K/D</div><div class="value live">3.4</div></div>
-        <div class="p-stat"><div class="label">Kills</div><div class="value">42</div></div>
-        <div class="p-stat"><div class="label">Rating</div><div class="value amber">7.9</div></div>
-      </div>
-    </div>
+  <div class="grid" id="playersGrid">
+    <div style="grid-column:1/-1; text-align:center; color:var(--text-faint); padding:40px;">Loading players…</div>
   </div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://huimmblsrqycszszkyve.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_BX3Gv_oqIqyLkGZGr1Xpig_2xQyoJas';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function initials(name){
+    return name.split(' ').map(w => w[0]).join('').slice(0,2).toUpperCase();
+  }
+
+  async function loadPlayers(){
+    const { data, error } = await sb.from('players').select('*').order('rating', { ascending: false });
+    const grid = document.getElementById('playersGrid');
+    if(error || !data || data.length === 0){
+      grid.innerHTML = '<div style="grid-column:1/-1; text-align:center; color:var(--text-faint); padding:40px;">Players not available yet.</div>';
+      return;
+    }
+    grid.innerHTML = data.map(p => `
+      <div class="p-card" onclick="location.href='player-profile.html?ign=${encodeURIComponent(p.ign)}'">
+        <div class="p-card-top">
+          <div class="p-avatar">${initials(p.ign)}</div>
+          <div>
+            <div class="p-ign">${escapeHtml(p.ign)}</div>
+            <div class="p-team">${escapeHtml(p.team || '')}</div>
+            <div class="p-role">${escapeHtml((p.role || '').toUpperCase())}</div>
+          </div>
+        </div>
+        <div class="p-stats">
+          <div class="p-stat"><div class="label">K/D</div><div class="value live">${p.kd}</div></div>
+          <div class="p-stat"><div class="label">Kills</div><div class="value">${p.kills}</div></div>
+          <div class="p-stat"><div class="label">Rating</div><div class="value amber">${p.rating}</div></div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  loadPlayers();
+</script>
 
 </body>
 </html>

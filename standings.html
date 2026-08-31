@@ -122,82 +122,57 @@
         <th>#</th><th>Team</th><th>Matches</th><th>WWCD</th><th>Kills</th><th>Place Pts</th><th>Trend</th><th style="text-align:right;">Total Pts</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td class="rank top">01</td>
-        <td class="team-cell"><span class="team-icon"></span>Team Soul</td>
-        <td>14</td><td class="wwcd-cell">3</td><td>62</td><td>86</td>
-        <td><span class="trend up">▲ 2</span></td>
-        <td class="pts">148</td>
-      </tr>
-      <tr>
-        <td class="rank top">02</td>
-        <td class="team-cell"><span class="team-icon"></span>GodLike Esports</td>
-        <td>14</td><td class="wwcd-cell">2</td><td>58</td><td>81</td>
-        <td><span class="trend same">— 0</span></td>
-        <td class="pts">139</td>
-      </tr>
-      <tr>
-        <td class="rank">03</td>
-        <td class="team-cell"><span class="team-icon"></span>Team XSpark</td>
-        <td>14</td><td class="wwcd-cell">1</td><td>51</td><td>61</td>
-        <td><span class="trend down">▼ 1</span></td>
-        <td class="pts">112</td>
-      </tr>
-      <tr>
-        <td class="rank">04</td>
-        <td class="team-cell"><span class="team-icon"></span>Global Esports</td>
-        <td>14</td><td class="wwcd-cell">1</td><td>47</td><td>57</td>
-        <td><span class="trend up">▲ 1</span></td>
-        <td class="pts">104</td>
-      </tr>
-      <tr>
-        <td class="rank">05</td>
-        <td class="team-cell"><span class="team-icon"></span>Enigma Gaming</td>
-        <td>14</td><td class="wwcd-cell">0</td><td>44</td><td>47</td>
-        <td><span class="trend down">▼ 1</span></td>
-        <td class="pts">91</td>
-      </tr>
-      <tr>
-        <td class="rank">06</td>
-        <td class="team-cell"><span class="team-icon"></span>Blind Esports</td>
-        <td>14</td><td class="wwcd-cell">0</td><td>39</td><td>45</td>
-        <td><span class="trend same">— 0</span></td>
-        <td class="pts">84</td>
-      </tr>
-      <tr>
-        <td class="rank">07</td>
-        <td class="team-cell"><span class="team-icon"></span>Orangutan</td>
-        <td>14</td><td class="wwcd-cell">0</td><td>36</td><td>39</td>
-        <td><span class="trend up">▲ 1</span></td>
-        <td class="pts">75</td>
-      </tr>
-      <tr>
-        <td class="rank">08</td>
-        <td class="team-cell"><span class="team-icon"></span>7Sea Esports</td>
-        <td>14</td><td class="wwcd-cell">0</td><td>33</td><td>34</td>
-        <td><span class="trend down">▼ 2</span></td>
-        <td class="pts">67</td>
-      </tr>
-      <tr>
-        <td class="rank">09</td>
-        <td class="team-cell"><span class="team-icon"></span>Team Vertex</td>
-        <td>14</td><td class="wwcd-cell">0</td><td>29</td><td>28</td>
-        <td><span class="trend same">— 0</span></td>
-        <td class="pts">57</td>
-      </tr>
-      <tr>
-        <td class="rank">10</td>
-        <td class="team-cell"><span class="team-icon"></span>Revenant Esports</td>
-        <td>14</td><td class="wwcd-cell">0</td><td>24</td><td>22</td>
-        <td><span class="trend down">▼ 1</span></td>
-        <td class="pts">46</td>
-      </tr>
+    <tbody id="standingsBody">
+      <tr><td colspan="8" style="text-align:center; color:var(--text-faint); padding:24px;">Loading standings…</td></tr>
     </tbody>
   </table>
 
   <div class="qual-line"><span class="swatch playoff"></span>Top 8 advance to Grand Finals &nbsp;&nbsp;<span class="swatch elim"></span>9th–18th eliminated</div>
 </main>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  const SUPABASE_URL = 'https://huimmblsrqycszszkyve.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_BX3Gv_oqIqyLkGZGr1Xpig_2xQyoJas';
+  const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  function trendHtml(trend){
+    if(!trend || trend === 'same') return '<span class="trend same">— 0</span>';
+    if(trend.startsWith('up')) return `<span class="trend up">▲ ${trend.slice(2)}</span>`;
+    if(trend.startsWith('down')) return `<span class="trend down">▼ ${trend.slice(4)}</span>`;
+    return '<span class="trend same">— 0</span>';
+  }
+
+  async function loadStandings(){
+    const { data, error } = await sb.from('teams').select('*').order('total_pts', { ascending: false });
+    const tbody = document.getElementById('standingsBody');
+    if(error || !data || data.length === 0){
+      tbody.innerHTML = '<tr><td colspan="8" style="text-align:center; color:var(--text-faint); padding:24px;">Standings not available yet.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = data.map((team, i) => {
+      const rank = String(i + 1).padStart(2, '0');
+      const rankClass = i < 2 ? 'rank top' : 'rank';
+      return `
+        <tr>
+          <td class="${rankClass}">${rank}</td>
+          <td class="team-cell"><span class="team-icon"></span>${escapeHtml(team.name)}</td>
+          <td>${team.matches}</td><td class="wwcd-cell">${team.wwcd}</td><td>${team.kills}</td><td>${team.place_pts}</td>
+          <td>${trendHtml(team.trend)}</td>
+          <td class="pts">${team.total_pts}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  loadStandings();
+</script>
 
 </body>
 </html>
